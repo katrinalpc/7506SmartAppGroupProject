@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         tID = (TextView) this.findViewById(R.id.person_id);
         tName = (TextView) this.findViewById(R.id.name);
         tType = (TextView) this.findViewById(R.id.type);
@@ -34,11 +33,8 @@ public class MainActivity extends AppCompatActivity {
         tLocation = (TextView) this.findViewById(R.id.location);
 
         connectSQL sql = new connectSQL();
-        sql.execute("SELECT * FROM people");
+        sql.execute("SELECT * FROM people"); //input query command here
     }
-
-
-
 
 
     public class connectSQL extends AsyncTask<String, Void, List<Map<String, String>>> {
@@ -46,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         private static final String user = "potatoma";
         private static final String password = "potatoma123";
 
-        List<Map<String, String>> queryResult = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> queryResult = new ArrayList<Map<String, String>>(); //queryResult is stored in an arraylist consists of maps
 
 
         @Override
@@ -79,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
                     queryResult.get(i).put("linkedin", rs.getString(5));
                     queryResult.get(i).put("location", rs.getString(6));
                     i++;
-
-
                 }
             }
             catch (Exception e)
@@ -93,10 +87,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Map<String, String>> result)
         {
-            //result.get(int x): get the row of the x_th query
-            //try x=0 and x=1 in this demo.
+            //param: result contains records returned from database
             try
             {
+                //result.get(int x): get the the x_th record
+                //try x=0 and x=1 in this demo.
+
                 String ID = result.get(1).get("ID");
                 String name = result.get(1).get("name");
                 String type = result.get(1).get("type");
@@ -116,10 +112,8 @@ public class MainActivity extends AppCompatActivity {
             {
                 e.printStackTrace();
             }
-
         }
     }
-
 }
 
 
