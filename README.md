@@ -22,7 +22,7 @@ connectSQL sql = new connectSQL(); //instantiate sql object
 sql.execute("SQL query here") //for instance, sql.execute("SELECT * FROM people")；
 ```
 
-in ```onPostExecute```, records returned are stored in ```List<Map<String, String>> result``` param, which is an arraylist containing multiple maps.
+in ```onPostExecute```, records returned are stored in ```List<Map<String, String>> result``` param, which is an arraylist containing multiple maps. You might want to implement what to do with records returned in this callback function.
 
 Use ```result.get(index)``` to find certain row, and use ```result.get(index).get(column_name) ```to further navigate to certain attribute.
 
