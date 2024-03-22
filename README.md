@@ -26,5 +26,5 @@ in ```onPostExecute```, records returned are stored in ```List<Map<String, Strin
 
 Use ```result.get(index)``` to find certain row, and use ```result.get(index).get(column_name) ```to further navigate to certain attribute.
 
-![](/images/Untitled 2.jpg)
-![](/images/Untitled 3.jpg)
+![](./images/Untitled%202.jpg)
+![](./images/Untitled%203.jpg)
