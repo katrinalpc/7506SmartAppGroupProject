@@ -18,12 +18,10 @@
         android:padding="19dp"
         >
 
-
-
         <ImageView
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:src="@drawable/loginlogo" />
+            android:src="@drawable/icon_login_student" />
 
         <EditText
             android:layout_width="match_parent"
