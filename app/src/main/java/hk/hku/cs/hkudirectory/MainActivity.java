@@ -25,12 +25,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /* uncomment when need to check variables from database
         tID = (TextView) this.findViewById(R.id.person_id);
         tName = (TextView) this.findViewById(R.id.name);
         tType = (TextView) this.findViewById(R.id.type);
         tEmail = (TextView) this.findViewById(R.id.email);
         tLinkedin = (TextView) this.findViewById(R.id.linkedin);
         tLocation = (TextView) this.findViewById(R.id.location);
+        */
 
         connectSQL sql = new connectSQL();
         sql.execute("SELECT * FROM people"); //input query command here

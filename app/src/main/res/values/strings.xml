@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">HKUDirectory</string>
+    <string name="welcome">HKU Directory</string>
+    <string name="forgot_your_pin"><u>Forgot your PIN?</u></string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="log_in">LOG IN</string>
+    <string name="faq">FAQ</string>
+    <string name="create_user_id">CREATE USER ID</string>
+    <string name="security_tips">SECURITY TIPS</string>
 </resources>
