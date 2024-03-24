@@ -2,7 +2,7 @@
 ## MySQL Database Related
 ### Credentials
 
-URL: nuc.hkumars.potatoma.com:3306
+URL: nuc.hkumars.potatoma.com:3306   [*HKU Wi-Fi or VPN needed]
 
 Web Management: http://nuc.hkumars.potatoma.com/phpmyadmin
 
