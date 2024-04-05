@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //tentative change for developing the homepage
 
         /* uncomment when need to check variables from database
         tID = (TextView) this.findViewById(R.id.person_id);
