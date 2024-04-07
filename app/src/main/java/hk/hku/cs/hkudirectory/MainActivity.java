@@ -2,8 +2,12 @@ package hk.hku.cs.hkudirectory;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,13 +21,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     TextView  tID, tName, tType, tEmail, tLinkedin, tLocation;
+    EditText txt_UserEmail, txt_UserPW;
+    Button btn_Login;
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.login_button) {
+            String uemail = txt_UserEmail.getText().toString();
+            String upassword = txt_UserPW.getText().toString();
+
+            // Redirect to the Home page
+            Intent intent = new Intent(getBaseContext(), HomePageActivity.class);
+            startActivity(intent);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
+
+        btn_Login = (Button)findViewById(R.id.login_button);
+        txt_UserEmail = (EditText)findViewById(R.id.email_input);
+        txt_UserPW = (EditText)findViewById(R.id.password_input);
+
+        btn_Login.setOnClickListener(this);
         //tentative change for developing the homepage
 
         /* uncomment when need to check variables from database
@@ -33,10 +57,12 @@ public class MainActivity extends AppCompatActivity {
         tEmail = (TextView) this.findViewById(R.id.email);
         tLinkedin = (TextView) this.findViewById(R.id.linkedin);
         tLocation = (TextView) this.findViewById(R.id.location);
-        */
+         */
+
 
         connectSQL sql = new connectSQL();
         sql.execute("SELECT * FROM people"); //input query command here
+
     }
 
 
@@ -49,8 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
             Toast.makeText(MainActivity.this, "Please wait...", Toast.LENGTH_SHORT).show();
         }
@@ -58,8 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected List<Map<String, String>> doInBackground(String... params) {
-            try
-            {
+            try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection(url, user, password);
 
@@ -68,8 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
                 int i = 0;
                 queryResult.clear();
-                while (rs.next())
-                {
+                while (rs.next()) {
                     queryResult.add(new HashMap<String, String>());
                     queryResult.get(i).put("ID", rs.getString(1));
                     queryResult.get(i).put("name", rs.getString(2));
@@ -79,20 +102,16 @@ public class MainActivity extends AppCompatActivity {
                     queryResult.get(i).put("location", rs.getString(6));
                     i++;
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return queryResult;
         }
 
         @Override
-        protected void onPostExecute(List<Map<String, String>> result)
-        {
+        protected void onPostExecute(List<Map<String, String>> result) {
             //param: result contains records returned from database
-            try
-            {
+            try {
                 //result.get(int x): get the the x_th record
                 //try x=0 and x=1 in this demo.
 
@@ -110,9 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 tLinkedin.setText(linkedin);
                 tLocation.setText(location);
                 //tID.setText(SQLQueryResult[0].getString(1).toString());
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
