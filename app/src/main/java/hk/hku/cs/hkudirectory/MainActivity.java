@@ -2,9 +2,12 @@ package hk.hku.cs.hkudirectory;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,12 +23,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import hk.hku.cs.hkudirectory.dao.UserDao;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "mysql-hkudirectory-MainActivity";
     TextView  tID, tName, tType, tEmail, tLinkedin, tLocation;
     EditText txt_UserEmail, txt_UserPW;
     Button btn_Login;
 
+    /*
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.login_button) {
@@ -37,17 +43,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
     }
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+
+        /*
         btn_Login = (Button)findViewById(R.id.login_button);
         txt_UserEmail = (EditText)findViewById(R.id.email_input);
         txt_UserPW = (EditText)findViewById(R.id.password_input);
 
+
         btn_Login.setOnClickListener(this);
+        */
         //tentative change for developing the homepage
 
         /* uncomment when need to check variables from database
@@ -60,12 +72,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          */
 
 
-        connectSQL sql = new connectSQL();
-        sql.execute("SELECT * FROM people"); //input query command here
+        // connectSQL sql = new connectSQL();
+        // sql.execute("SELECT * FROM people"); //input query command here
 
     }
 
+    public void reg(View view) {
+        startActivity(new Intent(getApplicationContext(), register.class));
+    }
 
+    public void login(View view) {
+        EditText EditTextEmail = findViewById(R.id.email_input);
+        EditText EditTextPassword = findViewById(R.id.password_input);
+
+        new Thread() {
+            public void run() {
+                UserDao userDao = new UserDao();
+                int msg = userDao.login(EditTextEmail.getText().toString(), EditTextPassword.getText().toString());
+                hand1.sendEmptyMessage(msg);
+                if (msg == 1) {
+                    Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Login failed!", Toast.LENGTH_LONG).show();
+                }
+            }
+        }.start();
+    }
+
+    @SuppressLint("HandlerLeak")
+    final Handler hand1 = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                Toast.makeText(getApplicationContext(), "Login failed!", Toast.LENGTH_LONG).show();
+            } else if (msg.what == 1) {
+                Toast.makeText(getApplicationContext(), "Login successfully!", Toast.LENGTH_LONG).show();
+            } else if (msg.what == 2) {
+                Toast.makeText(getApplicationContext(), "Wrong password!", Toast.LENGTH_LONG).show();
+            } else if (msg.what == 3) {
+                Toast.makeText(getApplicationContext(), "Account doesn't exist!", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
+
+    /*
     public class connectSQL extends AsyncTask<String, Void, List<Map<String, String>>> {
         private static final String url = "jdbc:mysql://nuc.hkumars.potatoma.com:3306/comp7506?useSSL=false&allowPublicKeyRetrieval=true";
         private static final String user = "potatoma";
@@ -134,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+    */
 }
 
 
